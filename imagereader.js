@@ -1,3 +1,4 @@
+var thumbnail = require('jimp');
 var fs = require('fs');
 var dir = __dirname + '\\images';
 var images;

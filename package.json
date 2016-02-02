@@ -1,0 +1,19 @@
+{
+  "name": "imagebox",
+  "version": "1.0.0",
+  "description": "An image viewer in browser",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "dependencies": {
+    
+  },
+  "keywords": [
+    "image",
+    "viewer",
+    "browser"
+  ],
+  "author": "Saeid Alidadi",
+  "license": "MIT"
+}
