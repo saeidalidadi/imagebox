@@ -42,7 +42,7 @@ function image(request, response) {
 	fs.exists(thumb_dir, function(exist) {
 		//checking for existance of thumbnail image in thumbnails folder
 		if(exist) {console.log(thumb_dir);
-			fs.readFileSync(thumb_dir, function(err, data) {
+			fs.readFile(thumb_dir, function(err, data) {
 				response.writeHead(200,{'Content-Type':'image/jpg'});
 				response.write(data);
 				response.end();
@@ -63,7 +63,6 @@ function image(request, response) {
 							response.end();
 					 	});
 					});
-
 				}
 			});		
 		}
