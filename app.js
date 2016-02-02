@@ -64,6 +64,9 @@ function image(request, response) {
 					 	});
 					});
 				}
+				else {
+					response.end();
+				}
 			});		
 		}
 		else {
