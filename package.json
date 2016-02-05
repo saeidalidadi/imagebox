@@ -6,8 +6,8 @@
   "scripts": {
     "test": "test"
   },
-  "dependencies": {
-    
+  "dependencies":{
+    "jimp":">=0.2.21"
   },
   "keywords": [
     "image",
