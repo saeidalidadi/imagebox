@@ -17,13 +17,11 @@ function home(response){
 
 function style(request, response){
 
-	var dir = __dirname + '\\style\\' + request.url.replace('/','');
-	fs.readFile(dir, function(err, data){
-		response.writeHead(200,{'Content-Type':'text/css'});
-		response.write(data);
-		response.end();
-	});	
-
+	var dir = __dirname + '/style/' + request.url.replace('/','');
+	var data = fs.readFileSync(dir);	
+	response.writeHead(200,{'Content-Type':'text/css'});
+	response.write(data);
+	response.end();
 }
 
 function script(request, response) {
@@ -80,7 +78,7 @@ function controller(req, res) {
 	if(req.url == '/'){
 		home(res);
 	}
-	else if (req.url == '/style.css' || req.url == '/bootstrap.min.css') {
+	else if (req.url == '/style.css' || req.url == '/normalize.css') {
 		style(req,res);
 	}
 	else if(req.url == '/addimages.js'){
