@@ -41,7 +41,7 @@ function image(request, response) {
 	var big_dir = __dirname + '\\images\\' + request.url.replace('/','');
 	fs.exists(thumb_dir, function(exist) {
 		//checking for existance of thumbnail image in thumbnails folder
-		if(exist) {console.log(thumb_dir);
+		if(exist) {
 			fs.readFile(thumb_dir, function(err, data) {
 				response.writeHead(200,{'Content-Type':'image/jpg'});
 				response.write(data);
