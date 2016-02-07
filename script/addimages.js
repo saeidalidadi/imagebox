@@ -10,7 +10,7 @@ window.onload  =  function(){
 		var lastImageNumber = document.getElementsByClassName('img-item').length;
 
     	for(var i = lastImageNumber+1; i <= lastImageNumber + 3; i++) {
-    		imageRow += '<div id="image-0' + i + '" class="col-md-4 col-lg-4" >';
+    		imageRow += '<div id="image-0' + i + '" class="pull-right" >';
     			imageRow += '<img src="/img-0' + i + '.jpg" class="img-thumbnail  img-item">';
     		imageRow += '</div>';
     	}		
