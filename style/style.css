@@ -13,9 +13,7 @@ header {
 .container {
 	margin: 0 auto;
 }
-.img-item {
 
-}
 img {
 	max-width: 100%;
 }
@@ -39,10 +37,21 @@ ul li {
 #btn {
  	clear: both;
  	text-align: center;
+ 	padding: 10px 0;
 }
 
 .clearfix::after {
 	content: "";
 	display: table;
   	clear: both;
+}
+
+@media (min-width: 760px) {
+	.container {
+		max-width: 1050px;
+	}
+
+	ul li {
+		width: 30%;
+	}
 }
