@@ -51,7 +51,7 @@ function image(request, response) {
 				if(exist) {
 					thumbnail.read(big_dir, function (err, lenna) {
    						if (err) throw err;
-    					lenna.resize(256, 256)       // resize 
+    					lenna.scale(0.5)       // resize 
   			      	 	.quality(60)            // set JPEG quality 
    			      	 	.greyscale()
    			      	 	.write(thumb_dir)            // set greyscale 
