@@ -103,7 +103,7 @@ function image(request, response) {
 						if(exist) {
 							thumbnail.read(big_path, function (err, lenna) {
 		   						if (err) throw err;
-		    					lenna.resize(256, 256)   // resize 
+		    					lenna.scale(0.5)   // resize 
 		  			      	 	.quality(30)             // set JPEG quality 
 		   			      	 	.greyscale()             // set greyscale
 		   			      	 	.write(thumb_path)        
