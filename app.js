@@ -5,12 +5,14 @@ var thumbnail = require('jimp');
 var staticf = require('./static');
 
 
+
 function controller(req, res) {
 	if(req.url == '/'){
 		staticf.home(res);
 	}
-	else if (req.url == '/style.css' || req.url == '/bootstrap.min.css') {
-		staticf.style(req,res);
+
+	else if (req.url == '/style.css' || req.url == '/normalize.css') {
+		style(req,res);
 	}
 	else if(req.url == '/addimages.js'){
 		staticf.script(req, res);

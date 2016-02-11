@@ -8,7 +8,8 @@
   },
   "dependencies":{
     "jimp":">=0.2.21",
-    "mongodb" : "2.1.6"
+    "mongodb" : "2.1.6",
+    "normalize.css": "^3.0.3"
   },
   "keywords": [
     "image",
