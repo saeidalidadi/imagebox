@@ -2,46 +2,7 @@
 var fs = require('fs');
 var path = require('path');
 var thumbnail = require('jimp');
-var mongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID;
-
-
-//inserting image to database
-var insertImage = function(db, name, format, big, thumbnail) {
-
-	var image = {
-		"name" : name,
-		"big" : big,
-		"thumbnail" : thumbnail,
-		"format" : format
-	}
-
-	db.collection('images').insertOne(image);
-}
-
-//checking existance of image in database
-var existsIndb = function(name, callback) {
-
-	mongoClient.connect('mongodb://localhost:27017/images', function(err, db) {
-		if(err) {
-			throw "An error in database connection";
-		}
-		else {
-			var result = db.collection("images").find({"name" : name });
-			//console.log('Ok, connected to Mongodb client' + result);
-			result.each(function(err, doc) {
-				if(doc == null ) {
-					console.log('The image not exist in database.');
-					callback(false);
-				}
-				else {
-					callback(true);
-				}
-			});
-		}
-		db.close();
-	});
-}
+var db = require('./database');
 
 //answer to request after loading files
 function answer(data, type, response) {
@@ -82,7 +43,7 @@ function image(request, response) {
 	var big_path = __dirname + '\\images\\' + name;
 
 	//checks to find that the image thumbnail and big exist in database
-	existsIndb(name, function(existindb) {
+	db.existsIndb(name, function(existindb) {
 		if(!existindb) {
 			//if the thumbnails directory not exsits then creat it
 			fs.mkdir(thumb_dir, function(err) {
