@@ -12,7 +12,7 @@ function controller(req, res) {
 	}
 
 	else if (req.url == '/style.css' || req.url == '/normalize.css') {
-		style(req,res);
+		staticf.style(req,res);
 	}
 	else if(req.url == '/addimages.js'){
 		staticf.script(req, res);
