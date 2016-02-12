@@ -1,46 +1,69 @@
+var mongodb = require('mongodb');
 var mongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
-
-
+var test = require('assert');
 function Database() {
-
+	mongodb.call(this);
+	this.url = 'mongodb://localhost:27017/imagebox';
 }
+
+Database.prototype = Object.create(mongodb);
 //connectiong to database if no connection is yet
-Database.prototype.connect = function() {
+/*Database.prototype.connect = function() {
 
-}
+}*/
 //inserting image to database
-Database.prototype.insertImage = function(db, name, format, big, thumbnail) {
+Database.prototype.insertImage = function(name, format, big, thumbnail, callback) {
 
 	var image = {
-		"name" : name,
-		"big" : big,
-		"thumbnail" : thumbnail,
-		"format" : format
+		name : name,
+		big : big,
+		thumbnail : thumbnail,
+		format: format
+	}
+	//insertin 
+	function insertDocument(db, coll, callback) {
+		var col = db.collection('images');
+		col.insertOne(image, function(err, result) {
+			//callback(result);
+			//console.log(test.equal(null, err));
+    		//test.equal(1, result.insertedCount);
+    		//console.log(result);
+		});
 	}
 
-	db.collection('images').insertOne(image);
+	mongoClient.connect(this.url, function(err, db) {
+		if(err) {
+
+		}
+		else {
+			insertDocument(db,'images', function(result) {
+				db.close();
+			});
+		}
+	});
 }
 
 //checking existance of image in database
-Database.prototype.existsIndb = function(name, callback) {
+Database.prototype.findImage = function(name, callback) {
 
-	mongoClient.connect('mongodb://localhost:27017/images', function(err, db) {
+	mongoClient.connect(this.url, function(err, db) {
 		if(err) {
 			throw "An error in database connection";
 		}
 		else {
-			var result = db.collection("images").find({"name" : name });
-			result.each(function(err, doc) {
-				if(doc == null ) {
+			var col = db.collection('images');
+			col.find({ name : name }).limit(1).next(function(err, result) {
+				
+				if(result == null || typeof result == 'undefined' || result.length == 0 ) {
 					callback(false);
 				}
 				else {
-					callback(true);
+					callback(true, result.thumbnail.buffer );
 				}
+				db.close();
 			});
 		}
-		db.close();
 	});
 }
 

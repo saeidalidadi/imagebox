@@ -2,7 +2,7 @@
 var fs = require('fs');
 var path = require('path');
 var thumbnail = require('jimp');
-var db = require('./database');
+var database = require('./database');
 
 //answer to request after loading files
 function answer(data, type, response) {
@@ -37,18 +37,19 @@ function script(request, response) {
 
 function image(request, response) {
 
+	var basename = path.parse(request.url).name;
 	var name = request.url.replace('/','');
 	var thumb_dir = __dirname + '\\images\\thumbnails\\';
 	var thumb_path = thumb_dir + name;
 	var big_path = __dirname + '\\images\\' + name;
 
 	//checks to find that the image thumbnail and big exist in database
-	db.existsIndb(name, function(existindb) {
+	database.findImage(basename, function(existindb, image) {
 		if(!existindb) {
 			//if the thumbnails directory not exsits then creat it
 			fs.mkdir(thumb_dir, function(err) {
 				if(err && err.code == 'EEXIST') {
-					console.log('directory exist');
+					
 				}
 			});
 
@@ -57,6 +58,7 @@ function image(request, response) {
 				if(exist) {
 					fs.readFile(thumb_path, function(err, data) {
 						answer(data, 'image/jpg', response);
+						//database.insertImage(basename, 'jpg', '', data);
 					});
 				} 
 				else if(!exist) {
@@ -70,6 +72,9 @@ function image(request, response) {
 		   			      	 	.write(thumb_path)        
 		    		     	 	.getBuffer(thumbnail.MIME_JPEG, function(err, buffer) {
 		    		    			answer(buffer, 'image/jpg', response);
+		    		    			database.insertImage(basename, 'jpg', '', buffer, function() {
+
+		    		    			});
 							 	});
 							});
 						}
@@ -85,7 +90,8 @@ function image(request, response) {
 			});	
 		} 
 		else {
-
+			//console.log(image);
+			answer(image, 'image/jpg', response);
 		}
 	});
 }
