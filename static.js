@@ -4,7 +4,7 @@ var path = require('path');
 var thumbnail = require('jimp');
 var database = require('./database');
 
-//answer to request after loading files
+//Response to all request after loading files
 function answer(data, type, response) {
 
 	response.writeHead(200,{'Content-Type': type });
@@ -44,8 +44,8 @@ function image(request, response) {
 	var big_path = __dirname + '\\images\\' + name;
 
 	//checks to find that the image thumbnail and big exist in database
-	database.findImage(basename, function(existindb, image) {
-		if(!existindb) {
+	database.findImage(basename, function(image) {
+		if(!image) {
 			//if the thumbnails directory not exsits then creat it
 			fs.mkdir(thumb_dir, function(err) {
 				if(err && err.code == 'EEXIST') {
@@ -58,7 +58,7 @@ function image(request, response) {
 				if(exist) {
 					fs.readFile(thumb_path, function(err, data) {
 						answer(data, 'image/jpg', response);
-						//database.insertImage(basename, 'jpg', '', data);
+						database.insertImage(basename, 'jpg', '', data);
 					});
 				} 
 				else if(!exist) {
@@ -90,7 +90,7 @@ function image(request, response) {
 			});	
 		} 
 		else {
-			//console.log(image);
+			//anser with images returned from database
 			answer(image, 'image/jpg', response);
 		}
 	});

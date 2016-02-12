@@ -8,10 +8,7 @@ function Database() {
 }
 
 Database.prototype = Object.create(mongodb);
-//connectiong to database if no connection is yet
-/*Database.prototype.connect = function() {
 
-}*/
 //inserting image to database
 Database.prototype.insertImage = function(name, format, big, thumbnail, callback) {
 
@@ -32,7 +29,7 @@ Database.prototype.insertImage = function(name, format, big, thumbnail, callback
 		});
 	}
 
-	mongoClient.connect(this.url, function(err, db) {
+	this.connect(this.url, function(err, db) {
 		if(err) {
 
 		}
@@ -44,10 +41,10 @@ Database.prototype.insertImage = function(name, format, big, thumbnail, callback
 	});
 }
 
-//checking existance of image in database
+//find image in database and send result as buffer to callback
 Database.prototype.findImage = function(name, callback) {
 
-	mongoClient.connect(this.url, function(err, db) {
+	this.connect(this.url, function(err, db) {
 		if(err) {
 			throw "An error in database connection";
 		}
@@ -59,7 +56,7 @@ Database.prototype.findImage = function(name, callback) {
 					callback(false);
 				}
 				else {
-					callback(true, result.thumbnail.buffer );
+					callback(result.thumbnail.buffer);
 				}
 				db.close();
 			});
