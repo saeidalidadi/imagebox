@@ -18,14 +18,11 @@ Database.prototype.insertImage = function(name, format, big, thumbnail, callback
 		thumbnail : thumbnail,
 		format: format
 	}
-	//insertin 
+	//insertin documents into collection 
 	function insertDocument(db, coll, callback) {
-		var col = db.collection('images');
+		var col = db.collection(coll);
 		col.insertOne(image, function(err, result) {
-			//callback(result);
-			//console.log(test.equal(null, err));
-    		//test.equal(1, result.insertedCount);
-    		//console.log(result);
+
 		});
 	}
 
